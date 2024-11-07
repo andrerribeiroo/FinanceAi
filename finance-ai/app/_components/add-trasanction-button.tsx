@@ -88,15 +88,13 @@ const AddTransactionButton = () => {
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      
-
       await addTransaction(data);
       setDialogIsOpen(false);
       form.reset();
     } catch (error) {
       console.error(error);
     }
-
+  };
     return (
       <Dialog
         open={dialogIsOpen}
@@ -264,6 +262,7 @@ const AddTransactionButton = () => {
       </Dialog>
     );
   };
-};
+
+
 
 export default AddTransactionButton;

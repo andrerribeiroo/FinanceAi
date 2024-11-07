@@ -17,7 +17,9 @@ export const MoneyInput = forwardRef(
             allowNegative={false}
             customInput={Input}
             getInputRef= {ref}
+            
             />
         )
     }
 )
+MoneyInput.displayName = "MoneyInput";
