@@ -1,5 +1,18 @@
-import { TransactionCategory, TransactionPaymentMethod, TransactionType } from "@prisma/client";
-import { Value } from "@radix-ui/react-select";
+import {
+  TransactionCategory,
+  TransactionPaymentMethod,
+  TransactionType,
+} from "@prisma/client";
+
+export const TRANSACTION_PAYMENT_METHOD_ICONS = {
+  [TransactionPaymentMethod.CREDIT_CARD]: "credit-card.svg",
+  [TransactionPaymentMethod.DEBIT_CARD]: "debit-card.svg",
+  [TransactionPaymentMethod.BANK_TRANSFER]: "bank-transfer.svg",
+  [TransactionPaymentMethod.BANK_SLIP]: "bank-slip.svg",
+  [TransactionPaymentMethod.CASH]: "money.svg",
+  [TransactionPaymentMethod.PIX]: "pix.svg",
+  [TransactionPaymentMethod.OTHER]: "other.svg",
+};
 
 export const TRANSACTION_CATEGORY_LABELS = {
   EDUCATION: "Educação",
@@ -7,13 +20,14 @@ export const TRANSACTION_CATEGORY_LABELS = {
   FOOD: "Alimentação",
   HEALTH: "Saúde",
   HOUSING: "Moradia",
+  OTHER: "Outros",
   SALARY: "Salário",
   TRANSPORTATION: "Transporte",
   UTILITY: "Utilidades",
-  OTHER: "Outros",
 };
+
 export const TRANSACTION_PAYMENT_METHOD_LABELS = {
-  BANK_TRANSFER: "Tranferência Bancária",
+  BANK_TRANSFER: "Transferência Bancária",
   BANK_SLIP: "Boleto Bancário",
   CASH: "Dinheiro",
   CREDIT_CARD: "Cartão de Crédito",
@@ -37,37 +51,40 @@ export const TRANSACTION_TYPE_OPTIONS = [
   },
 ];
 
-export const PAYMENT_METHOD_OPTIONS = [
-    {
-      value: TransactionPaymentMethod.BANK_TRANSFER,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_TRANSFER],
-    },
-    {
-      value: TransactionPaymentMethod.BANK_SLIP ,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_SLIP],
-    },
-    {
-      value: TransactionPaymentMethod.CASH,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CASH],
-    },
-    {
-      value: TransactionPaymentMethod.CREDIT_CARD,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CREDIT_CARD],
-    },
-    {
-      value: TransactionPaymentMethod.DEBIT_CARD,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.DEBIT_CARD],
-    },
-    {
-      value: TransactionPaymentMethod.PIX,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.PIX],
-    },
-    {
-      value: TransactionPaymentMethod.OTHER,
-      label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.OTHER],
-    },
-  ];
-  
+export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
+  {
+    value: TransactionPaymentMethod.BANK_TRANSFER,
+    label:
+      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_TRANSFER],
+  },
+  {
+    value: TransactionPaymentMethod.BANK_SLIP,
+    label:
+      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_SLIP],
+  },
+  {
+    value: TransactionPaymentMethod.CASH,
+    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CASH],
+  },
+  {
+    value: TransactionPaymentMethod.CREDIT_CARD,
+    label:
+      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CREDIT_CARD],
+  },
+  {
+    value: TransactionPaymentMethod.DEBIT_CARD,
+    label:
+      TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.DEBIT_CARD],
+  },
+  {
+    value: TransactionPaymentMethod.OTHER,
+    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.OTHER],
+  },
+  {
+    value: TransactionPaymentMethod.PIX,
+    label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.PIX],
+  },
+];
 
 export const TRANSACTION_CATEGORY_OPTIONS = [
   {
@@ -76,7 +93,7 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
   },
   {
     value: TransactionCategory.ENTERTAINMENT,
-    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.ENTERTAINMENT], 
+    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.ENTERTAINMENT],
   },
   {
     value: TransactionCategory.FOOD,
@@ -91,6 +108,10 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.HOUSING],
   },
   {
+    value: TransactionCategory.OTHER,
+    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.OTHER],
+  },
+  {
     value: TransactionCategory.SALARY,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.SALARY],
   },
@@ -101,10 +122,5 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
   {
     value: TransactionCategory.UTILITY,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.UTILITY],
-  },
-  {
-    value:  TransactionCategory.OTHER,
-    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.OTHER],
-
   },
 ];
