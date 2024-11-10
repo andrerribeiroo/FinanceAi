@@ -1,36 +1,45 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import UpsertTransactionForm from "@/app/_components/upsert-transaction-form";
+import { Dialog, DialogTrigger } from "@/app/_components/ui/dialog";
+import UpsertTransactionDialog from "@/app/_components/upsert-transaction-dialog";
 import { Transaction } from "@prisma/client";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
 
 interface EditTransactionButtonProps {
-  transaction: Transaction;
+   transaction: Transaction;
 }
 
 const EditTransactionButton = ({ transaction }: EditTransactionButtonProps) => {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-  return (
-    <>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="text-muted-foreground"
-        onClick={() => setDialogIsOpen(true)}
+   return (
+      <Dialog
+         open={dialogIsOpen}
+         onOpenChange={(open) => {
+            setDialogIsOpen(open);
+         }}
       >
-        <PencilIcon />
-      </Button>
-      <UpsertTransactionForm
-        isOpen={dialogIsOpen}
-        setIsOpen={setDialogIsOpen}
-        defaultValues={{ ...transaction, amount: Number(transaction.amount) }}
-        transactionId={transaction.id}
-      />
-    </>
-  );
+         <DialogTrigger asChild>
+            <Button
+               variant="ghost"
+               size="icon"
+               className="text-muted-foreground"
+            >
+               <PencilIcon />
+            </Button>
+         </DialogTrigger>
+         <UpsertTransactionDialog
+            setDialogIsOpen={setDialogIsOpen}
+            defaultValues={{
+               ...transaction,
+               amount: Number(transaction.amount),
+            }}
+            transactionId={transaction.id}
+         />
+      </Dialog>
+   );
 };
 
 export default EditTransactionButton;

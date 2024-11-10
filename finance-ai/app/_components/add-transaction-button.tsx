@@ -2,27 +2,32 @@
 
 import { ArrowDownUpIcon } from "lucide-react";
 import { Button } from "./ui/button";
+import { Dialog } from "./ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+
 import { useState } from "react";
-import UpsertTransactionForm from "./upsert-transaction-form";
+import UpsertTransactionDialog from "./upsert-transaction-dialog";
 
 const AddTransactionButton = () => {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-  return (
-    <>
-      <Button
-        className="rounded-full font-bold"
-        onClick={() => setDialogIsOpen(true)}
+   return (
+      <Dialog
+         open={dialogIsOpen}
+         onOpenChange={(open) => {
+            setDialogIsOpen(open);
+         }}
       >
-        Adicionar transação
-        <ArrowDownUpIcon />
-      </Button>
-      <UpsertTransactionForm
-        isOpen={dialogIsOpen}
-        setIsOpen={setDialogIsOpen}
-      />
-    </>
-  );
+         <DialogTrigger asChild>
+            <Button className="rounded-full font-bold">
+               Adicionar transações
+               <ArrowDownUpIcon />
+            </Button>
+         </DialogTrigger>
+
+         <UpsertTransactionDialog setDialogIsOpen={setDialogIsOpen} />
+      </Dialog>
+   );
 };
 
 export default AddTransactionButton;

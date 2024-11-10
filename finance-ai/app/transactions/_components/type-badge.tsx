@@ -1,36 +1,35 @@
 import { Badge } from "@/app/_components/ui/badge";
-import { TransactionType } from "@prisma/client";
+import { Transaction, TransactionType } from "@prisma/client";
 import { CircleIcon } from "lucide-react";
 
 interface TransactionTypeBadgeProps {
-  transactionType: TransactionType;
+   transaction: Transaction;
 }
 
-const TransactionTypeBadge = ({
-  transactionType,
-}: TransactionTypeBadgeProps) => {
-  if (transactionType === TransactionType.DEPOSIT) {
-    return (
-      <Badge className="bg-primary/10 font-bold text-primary">
-        <CircleIcon className="mr-2 fill-primary" size={10} />
-        Depósito
+const TransactionTypeBadge = ({ transaction }: TransactionTypeBadgeProps) => {
+   if (transaction.type === TransactionType.DEPOSIT) {
+      return (
+         <Badge className="gap-2 bg-muted font-bold text-primary hover:bg-muted">
+            <CircleIcon className="fill-primary" size={10} />
+            Depósito
+         </Badge>
+      );
+   }
+   if (transaction.type === TransactionType.EXPENSE) {
+      return (
+         <Badge className="gap-2 bg-danger bg-opacity-10 font-bold text-danger hover:bg-danger hover:bg-opacity-10">
+            <CircleIcon className="fill-danger" size={10} />
+            Despesa
+         </Badge>
+      );
+   }
+
+   return (
+      <Badge className="gap-2 bg-white bg-opacity-10 font-bold text-white hover:bg-white hover:bg-opacity-10">
+         <CircleIcon className="fill-white" size={10} />
+         Investimnento
       </Badge>
-    );
-  }
-  if (transactionType === TransactionType.EXPENSE) {
-    return (
-      <Badge className="font bold bg-danger/10 text-danger hover:bg-danger/20">
-        <CircleIcon className="mr-2 fill-danger" size={10} />
-        Despesa
-      </Badge>
-    );
-  }
-  return (
-    <Badge className="font bold bg-white/10 text-white">
-      <CircleIcon className="mr-2 fill-white" size={10} />
-      Investimento
-    </Badge>
-  );
+   );
 };
 
 export default TransactionTypeBadge;
