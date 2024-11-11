@@ -11,7 +11,17 @@ const Header = () => {
    return (
       <header className="flex items-center justify-between border-b border-solid px-8 py-4">
          <div className="flex items-center gap-10">
-            <Image src="/logo.svg" alt="Finance Ai" width={173} height={39} />
+         <Link
+               href="/"
+               className={`font-bold hover:text-primary ${
+                  pathname === "/"
+                     ? "font-bold text-primary"
+                     : "text-muted-foreground"
+               }`}
+            >
+             <Image src="/logo.svg" alt="Finance Ai" width={173} height={39} />
+            </Link>
+            
 
             <Link
                href="/"
