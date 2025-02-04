@@ -29,7 +29,7 @@ const EditTransactionButton = ({ transaction }: EditTransactionButtonProps) => {
             >
                <PencilIcon />
             </Button>
-         </DialogTrigger>
+            </DialogTrigger>
          <UpsertTransactionDialog
             setDialogIsOpen={setDialogIsOpen}
             defaultValues={{

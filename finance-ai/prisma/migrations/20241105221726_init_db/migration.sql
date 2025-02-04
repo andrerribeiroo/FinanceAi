@@ -1,4 +1,4 @@
--- CreateEnum
+j-- CreateEnum
 CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'EXPENSE', 'INVESTMENT');
 
 -- CreateEnum
