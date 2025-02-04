@@ -3,24 +3,32 @@
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { db } from "@/app/_lib/prisma";
 import { OpenAI } from "openai";
-import { CopyPlus } from "lucide-react";
-import { GenerateAiReportSchema, generateAiReportSchema } from "./shema";
+import { generateAiReportSchema } from "./shema";
 
-export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
-  generateAiReportSchema.parse({month})
+
+export const generateAiReport = async ({ month }: { month: string }) => {
+  // Validar entrada com o schema
+  generateAiReportSchema.parse({ month });
+
+  // Verificar se o usuário está autenticado
   const { userId } = await auth();
   if (!userId) {
-    throw new Error("User is not authenticated");
-  }
-  const user = await clerkClient().users.getUser(userId);
-  const hasPremiumPlan = user.publicMetadata.subscription === "premium";
-  if (!hasPremiumPlan) {
-    throw new Error("User does not have a premium plan");
+    throw new Error("Usuário não autenticado.");
   }
 
+  // Buscar informações do usuário no Clerk
+  const user = await clerkClient.users.getUser(userId);
+  const hasPremiumPlan = user.publicMetadata.subscription === "premium";
+  if (!hasPremiumPlan) {
+    throw new Error("Usuário não possui um plano premium.");
+  }
+
+  // Configurar a API do OpenAI
   const openAi = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
+
+  // Buscar transações do banco de dados
   const transactions = await db.transaction.findMany({
     where: {
       date: {
@@ -30,25 +38,42 @@ export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
     },
   });
 
-  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. As transações estão divididas por ponto e vírgula. A estrutura de cada uma é {DATA}-{TIPO}- {VALOR}-{CATEGORIA). São elas:
-    ${transactions
-      .map(
-        (transaction) =>
-          `${transaction.date.toLocaleDateString("pt-BR")}-R$${transaction.amount}-${transaction.type}-${transaction.category}`,
-      )
-      .join(";")}`;
-  const completion = await openAi.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: "Você é um especialista em gestão e organização de finanças pessoais. Voçê ajuda as pessoas a organizarem mulhor as suas finanças."
-      },
-      {
-        role: "user",
-        content,
-      }
-    ],
-  });
-  return completion.choices[0].message.content
+  // Caso não existam transações, retornar uma mensagem de erro
+  if (transactions.length === 0) {
+    return "Nenhuma transação encontrada para o período especificado.";
+  }
+
+  // Construir o conteúdo da mensagem para o ChatGPT
+  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. 
+As transações estão divididas por ponto e vírgula no seguinte formato: DATA-TIPO-VALOR-CATEGORIA. 
+Aqui estão minhas transações:
+${transactions
+  .map(
+    (transaction) =>
+      `${new Date(transaction.date).toLocaleDateString("pt-BR")}-${transaction.type}-R$${transaction.amount.toFixed(2)}-${transaction.category}`
+  )
+  .join(";")}`;
+
+  // Enviar a mensagem para o ChatGPT
+  try {
+    const completion = await openAi.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: "Você é um especialista em finanças pessoais e ajuda a melhorar a organização financeira das pessoas.",
+        },
+        {
+          role: "user",
+          content,
+        },
+      ],
+    });
+
+    // Retornar o conteúdo gerado pelo ChatGPT
+    return completion.choices[0].message?.content || "Erro ao gerar o relatório.";
+  } catch (error) {
+    console.error("Erro ao gerar relatório AI:", error);
+    throw new Error("Erro ao gerar relatório. Tente novamente mais tarde.");
+  }
 };
