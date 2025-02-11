@@ -72,7 +72,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
       {/* Botão para integrar Mercado Pago */}
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" style={{ color: "black", borderColor: "#03AFED", backgroundColor: "#03AFED" }}>
             Adicionar Mercado Pago
             <CreditCardIcon className="ml-2" />
           </Button>
@@ -81,7 +81,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
           <DialogHeader>
             <DialogTitle>Integração com Mercado Pago</DialogTitle>
             <DialogDescription>
-              Conecte sua conta do Mercado Pago para gerenciar pagamentos.
+              Conecte sua conta do Mercado Pago para gerenciar pagamentos. Deseja conectar ?
             </DialogDescription>
           </DialogHeader>
 
@@ -89,7 +89,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
             <DialogClose asChild>
               <Button variant="ghost">Cancelar</Button>
             </DialogClose>
-            <Button onClick={() => alert("Integração iniciada!")}>Conectar</Button>
+            <Button onClick={() => alert("Integração iniciada!")} style={{backgroundColor: "#03AFED" }}>Conectar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
