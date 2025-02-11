@@ -69,7 +69,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
         </DialogContent>
       </Dialog>
       
-      {/* Botão para integrar Mercado Pago */}
+      {/*Mercado Pago*/}
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" style={{ color: "black", borderColor: "#03AFED", backgroundColor: "#03AFED" }}>
@@ -89,7 +89,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
             <DialogClose asChild>
               <Button variant="ghost">Cancelar</Button>
             </DialogClose>
-            <Button onClick={() => alert("Integração iniciada!")} style={{backgroundColor: "#03AFED" }}>Conectar</Button>
+            <Button onClick={() => alert("Integração teste iniciada!")} style={{backgroundColor: "#03AFED" }}>Conectar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
